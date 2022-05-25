@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="navbar">
+<link rel="stylesheet" type="text/css"
+href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Ajout des Skins</title>
+</head>
+<body>
+<div layout:fragment="Mynavbar">
+<div class="container mt-5">
+<div class="card">
+<div class="card-header"> Ajout et Modification des Skins </div>
+<div class="card-body">
+ <form th:action="@{saveSkin}" method="post">
+ <div class="form-group">
+<label class="control-label" hidden>ID Skin :</label>
+<input type="hidden" name="idSkin" class="form-control"
+th:value="${skin.idSkin}" />
+ </div>
+
+<div class="form-group">
+ <label class="control-label">Nom Skin :</label>
+ <input type="text" name="nomSkin" class="form-control" th:value="${skin.nomSkin}" />
+<span th:errors= ${skin.nomSkin} class="text-danger"> </span>
+</div>
+<div class="form-group">
+<label class="control-label">Prix Skin :</label>
+<input type="text" name="prixSkin" class="form-control" th:value="${skin.prixSkin}" />
+<span th:errors=${skin.prixSkin} class="text-danger"> </span>
+</div>
+<div class="form-group">
+<label class="control-label">Date creation :</label>
+<input type="date" name="dateCreation" class="form-control" th:value="${skin.dateCreation}"/>
+<span th:errors=${skin.dateCreation} class="text-danger"> </span>
+</div>
+<div th:if="${mode!='edit'}">
+<div class="form-group"> 
+<label class="control-label">Categorie :</label>
+ <select name="categorie" class="form-control" required>
+ <option th:each="c : ${categories}" th:value="${c.idCat}" th:text="${c.nomCat}"></option>
+ </select>
+</div>
+</div>
+<div th:if="${mode=='edit'}">
+<div class="form-group"> 
+<label class="control-label">Categorie :</label>
+ <select name="categorie" class="form-control" required>
+  <option th:value="${skin.categorie.idCat}" th:text="${skin.categorie.nomCat}" selected></option>
+ <option th:each="c : ${categories}" th:value="${c.idCat}" th:text="${c.nomCat}"></option>
+ </select>
+</div>
+</div>
+ <div style="text-align:center;margin-top:20px;">
+  <a th:href="@{ListeSkins}" ><button type="button" class="btn btn-secondary">Annuler</button></a>
+ <button type="submit" class="btn btn-primary">Valider</button>
+ </div>
+ </div>
+</form>
+</div>
+ </div>
+ </div>
+ </div>
+</body>
+</html>
